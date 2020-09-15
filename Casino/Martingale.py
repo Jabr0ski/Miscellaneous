@@ -1,27 +1,30 @@
 import random
 
-#simulates the roulette for the 
+#simulates the roulette for the specified parameters
 #param f = number of spins
 #param c = selected colour
-def roulette(f,c):
+#param p = principal bet
+def roulette(f,c,p):
     count = 0
-    highestLossStreak = 0
+    highestMissStreak = 0
     resList = []
     for x in range (0, f):
         Result = []
         Roll = ""
-        vars = ["R","B"]
+        possibilities = ["R","B"]
         while c != Roll:
-            Roll = (random.choice(vars))
+            Roll = (random.choice(possibilities))
             Result.append(Roll)
-        if len(Result) > highestLossStreak:
-            highestLossStreak = len(Result)
-        print (Result)
+        if len(Result) > highestMissStreak:
+            highestMissStreak = len(Result)
         count += len(Result)
         resList.append(Result)
     resListCalc(resList)
-    print ("Average of", count/f, "spins before winning.\n")
-    print ("The highest amount of bets until winning was", highestLossStreak,".\n")
+    print ("\nAverage of", count/f, "spins before winning.\n")
+    print ("The highest amount of bets until winning was", highestMissStreak,"\n" \
+           "with", p*(2**(highestMissStreak-1)), "being the highest bet required to" \
+           "\nmaintain the strategy. The simulated gambler would win", p*f, "\n" \
+           "with no table limits.\n")
     main()
 
 #calculates percentage of wins corresponding to number of spins
@@ -35,14 +38,14 @@ def resListCalc(rl):
         occurRate = (lengthList.count(x)/len(lengthList)) * 100
         print(occurRate, "% of wins on spin number", x, "\n")
         
-
 def main():
     c = ""
+    p = int(input("Input the principal bet to simulate, no cents. "))
     f = int(input("Input the number of wins to simulate until. "))
     while c != "R" and c !="B":
         c = input("Input the bet colour, R or B. ")
         c = c.upper()
-    roulette(f,c)
+    roulette(f,c,p)
     
 print ("This program intends to display statistics relating to" \
        "\nThe Martingale strategy of roulette betting. This is" \
