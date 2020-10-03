@@ -128,21 +128,22 @@ def main():
     m = input("What is the max value number in the list? ")
     l = randomList(int(a), int(m))
     print("This is the randomised list:\n" + str(l))
-    a = input("IS, MS, or RS?")
+    a = input("IS (Insert Sort), MS (Merge Sort), or RS (Radix Sort)?")
     a = a.strip()
-    if a == "IS" or a == "is" or a == "I" or a == "i":
+    a = a.upper()
+    if a == "IS" or a == "I":
         stime = time.time()
         nl = insertSort(l)
         istime = time.time () - stime
         print("This is the insertSorted list:\n" + str(nl))
         
-    if a == "MS" or a == "ms" or a == "M" or a == "m":
+    if a == "MS" or a == "M":
         stime = time.time()
         nl = mergeSort(l)
         istime = time.time () - stime
         print("This is the mergeSorted list:\n" + str(nl))
         
-    if a == "RS" or a == "rs" or a == "R" or a == "r":
+    if a == "RS" or a == "R":
         stime = time.time()
         nl = radixSort(l)
         istime = time.time () - stime
