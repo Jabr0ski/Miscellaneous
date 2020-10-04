@@ -50,10 +50,8 @@ def mergeSort(l):
 def countingSort(arr, exp1): 
   
     n = len(arr) 
-  
     # The output array elements that will have sorted arr 
     output = [0] * (n) 
-  
     # initialize count array as 0 
     count = [0] * (10) 
   
@@ -97,6 +95,51 @@ def radixSort(l):
 
     return l
 
+# This function takes last element as pivot, places
+# the pivot element at its correct position in sorted
+# array, and places all smaller (smaller than pivot)
+# to left of pivot and all greater elements to right
+# of pivot
+ 
+ 
+def partition(arr, low, high):
+    i = (low-1)         # index of smaller element
+    pivot = arr[high]     # pivot
+ 
+    for j in range(low, high):
+ 
+        # If current element is smaller than or
+        # equal to pivot
+        if arr[j] <= pivot:
+ 
+            # increment index of smaller element
+            i = i+1
+            arr[i], arr[j] = arr[j], arr[i]
+ 
+    arr[i+1], arr[high] = arr[high], arr[i+1]
+    return (i+1)
+ 
+# The main function that implements QuickSort
+# arr[] --> Array to be sorted,
+# low  --> Starting index,
+# high  --> Ending index
+ 
+# Function to do Quick sort
+def quickSort(arr, low, high):
+    if len(arr) == 1:
+        return arr
+    if low < high:
+ 
+        # pi is partitioning index, arr[p] is now
+        # at right place
+        pi = partition(arr, low, high)
+ 
+        # Separately sort elements before
+        # partition and after partition
+        quickSort(arr, low, pi-1)
+        quickSort(arr, pi+1, high)
+    return arr
+
 def randomList(a, m):
     #r = random.randint(0, a)
     intlist = []
@@ -128,7 +171,7 @@ def main():
     m = input("What is the max value number in the list? ")
     l = randomList(int(a), int(m))
     print("This is the randomised list:\n" + str(l))
-    a = input("IS (Insert Sort), MS (Merge Sort), or RS (Radix Sort)?")
+    a = input("IS (Insert Sort), MS (Merge Sort), QS (Quick Sort), or RS (Radix Sort)?")
     a = a.strip()
     a = a.upper()
     if a == "IS" or a == "I":
@@ -148,6 +191,12 @@ def main():
         nl = radixSort(l)
         istime = time.time () - stime
         print("This is the radixSorted list:\n" + str(nl))
+        
+    if a == "QS" or a == "Q":
+        stime = time.time()
+        nl = quickSort(l, 0, len(l)-1)
+        istime = time.time () - stime
+        print("This is the quickSorted list:\n" + str(nl))
 
     print("It took " + str(istime) + " to compute.")
     ascTest(nl)
